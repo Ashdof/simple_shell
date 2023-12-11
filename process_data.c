@@ -14,6 +14,7 @@ int initChild(char **argv)
 {
 	pid_t pid;
 	int wstatus;
+	char *envp[] = {"PATH=/bin", (char *) 0};
 
 	pid = fork();
 
@@ -22,7 +23,7 @@ int initChild(char **argv)
 	else if (pid == 0)
 	{
 		/* child process */
-		if (execve(argv[0], argv, NULL) == -1)
+		if (execve(argv[0], argv, envp) == -1)
 		{
 			perror(argv[0]);
 			free(*argv);

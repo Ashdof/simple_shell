@@ -19,7 +19,7 @@ int main(void)
 		len = getLine(&buffer);
 		args = parseString(buffer);
 		status = launchProcess(args);
-		printf("\nCommands: %s", buffer);
+		printf("\nCommands: %s\n", buffer);
 		printf("Length: %ld\n", len);
 		printf("Status: %d\n\n", status);
 
