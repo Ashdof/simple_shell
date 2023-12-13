@@ -36,10 +36,19 @@ int main(void)
  */
 int launchProcess(char **args)
 {
+	int i, num;
+	int (*builtins_cmd[]) (char **) = {&handleExit};
+	char *built_ins[] = {"exit"};
+
 	if (args[0] == NULL)
-	{
-		free(args);
 		return (1);
+
+	num = sizeof(builtins_cmd) / sizeof(char *);
+
+	for (i = 0; i < num; i++)
+	{
+		if (strcmp(args[0], built_ins[i]) == 0)
+			return ((*builtins_cmd[i])(args));
 	}
 
 	return (initChild(args));

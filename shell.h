@@ -30,5 +30,6 @@ int strLen(const char *);
 char *getEnv(const char *);
 void *strCpy(char *, char *);
 char *strCat(char *, char *);
+int handleExit(char **);
 
 #endif /* SIMPLE_SHELL */
