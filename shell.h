@@ -22,14 +22,17 @@ char **parseString(char *);
 int launchProcess(char **);
 char *buildPath(char *, char *, int);
 char *handlePath(char *);
+int handleEnv(char **);
+int handleExit(char **);
+char *getEnv(const char *);
 
 int strnCmp(char *, char *, int);
 int strCmp(char *, char *);
 char *strDup(char *);
 int strLen(const char *);
-char *getEnv(const char *);
 void *strCpy(char *, char *);
 char *strCat(char *, char *);
-int handleExit(char **);
+int scriptChar(char);
+int scriptString(char *);
 
 #endif /* SIMPLE_SHELL */

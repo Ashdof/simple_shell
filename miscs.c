@@ -21,3 +21,31 @@ char *strCat(char *dest, char *src)
 
 	return (dest);
 }
+
+/**
+ * scriptChar - print a character
+ * @c: the character to print
+ *
+ * Return: the character
+ */
+int scriptChar(char c)
+{
+	return (write(1, &c, 1));
+}
+
+/**
+ * scriptString - print an array of characters
+ * @str: a pointer to a space in memory where the array of characters
+ * is stored
+ *
+ * Return: number of characters printed
+ */
+int scriptString(char *str)
+{
+	int i;
+
+	for (i = 0; str[i] != '\0'; i++)
+		scriptChar(str[i]);
+
+	return (i);
+}

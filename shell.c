@@ -37,8 +37,11 @@ int main(void)
 int launchProcess(char **args)
 {
 	int i, num;
-	int (*builtins_cmd[]) (char **) = {&handleExit};
-	char *built_ins[] = {"exit"};
+	char *built_ins[] = {"exit", "env"};
+	int (*builtins_cmd[]) (char **) = {
+		&handleExit,
+		&handleEnv
+	};
 
 	if (args[0] == NULL)
 		return (1);

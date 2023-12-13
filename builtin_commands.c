@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * handleExit - implement the built-in exit function
+ * handleExit - implement the built-in exit command
  * @argv: a reference pointer to commands provided by user
  *
  * Return: 0 on success
@@ -12,10 +12,19 @@ int handleExit(__attribute__((unused)) char **argv)
 }
 
 /**
- * builtins_cmd - function pointer
+ * handleEnv - implement env built-in command
  *
- * description: these are pointer functions to built in commands
+ * Return: nothing
  */
-int (*builtins_cmd) (char **) = {
-        &handleExit
-};
+int handleEnv(__attribute__((unused)) char **argv)
+{
+	int i;
+
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		scriptString(environ[i]);
+		scriptString("\n");
+	}
+
+	return (1);
+}
