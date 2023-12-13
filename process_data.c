@@ -185,7 +185,6 @@ char *buildPath(char *dir, char *cmd, int n)
 char *getEnv(const char *cmd)
 {
 	int i, len = 0;
-	extern char **environ;
 
 	len = strLen(cmd);
 

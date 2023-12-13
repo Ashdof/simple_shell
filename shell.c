@@ -12,8 +12,7 @@ int main(void)
 
 	buffer = NULL;
 
-	do	
-	{
+	do {
 		printf("($) ");
 		getLine(&buffer);
 		args = parseString(buffer);
@@ -37,11 +36,11 @@ int main(void)
  */
 int launchProcess(char **args)
 {
-        if (args[0] == NULL)
+	if (args[0] == NULL)
 	{
 		free(args);
-                return (1);
+		return (1);
 	}
 
-        return (initChild(args));
+	return (initChild(args));
 }
