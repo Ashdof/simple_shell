@@ -14,28 +14,34 @@ int initChild(char **argv)
 {
 	pid_t pid;
 	int wstatus;
-	char *envp[] = {"PATH=/bin", (char *) 0};
+	char *arg, *cmd;
 
-	pid = fork();
+	arg = argv[0];
+	cmd = handlePath(arg);
 
-	if (pid < 0)
-		perror("($)"); /* error forking */
-	else if (pid == 0)
-	{
-		/* child process */
-		if (execve(argv[0], argv, envp) == -1)
-		{
-			perror(argv[0]);
-			free(*argv);
-		}
-		exit(EXIT_FAILURE);
-	}
+	if (cmd == NULL)
+		perror(arg);
 	else
 	{
-		/* parent process */
-		do {
-			waitpid(pid, &wstatus, WUNTRACED);
-		} while (!WIFEXITED(wstatus) && !WIFSIGNALED(wstatus));
+		pid = fork();
+		if (pid < 0)
+			perror(arg); /* error forking */
+
+		else if (pid == 0)
+		{
+			/* child process */
+			if (execve(cmd, argv, NULL) == -1)
+				perror(arg);
+
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			/* parent process */
+			do {
+				waitpid(pid, &wstatus, WUNTRACED);
+			} while (!WIFEXITED(wstatus) && !WIFSIGNALED(wstatus));
+		}
 	}
 
 	return (1);
@@ -89,18 +95,107 @@ char **parseString(char *str)
 }
 
 /**
- * launchProcess - launch a child process
- * @args: a reference pointer to a space in memory where tokenized
- * commands are stored
+ * handlePath - compute path
+ * @cmd: a pointer to command
  *
- * description: this function launches a child process
+ * description: this function searches the system and attempts to
+ * build the path of a command.
  *
- * Return: 1 as status of execution
+ * Return: on success, it returns a pointer to the executable file,
+ * a null pointer if it fails
  */
-int launchProcess(char **args)
+char *handlePath(char *cmd)
 {
-	if (args[0] == NULL)
-		return (1);
+	struct stat buffer;
+	int len;
+	char *path, *path_dup, *dir, *full_path;
 
-	return (initChild(args));
+	path = getEnv("PATH");
+	if (path == NULL)
+	{
+		printf("Path is null!\n");
+		return (NULL);
+	}
+
+	path_dup = strDup(path);
+	len = strLen(cmd);
+	dir = strtok(path_dup, PATH_DELIM);
+
+	while (dir != NULL)
+	{
+		full_path = buildPath(dir, cmd, len);
+
+		if (stat(full_path, &buffer) == 0)
+		{
+			free(path_dup);
+			return (full_path);
+		}
+		else
+		{
+			free(full_path);
+			dir = strtok(NULL, PATH_DELIM);
+		}
+	}
+
+	free(path_dup);
+	if (stat(cmd, &buffer) == 0)
+		return (cmd);
+
+	/* executable not found */
+	return (NULL);
+}
+
+/**
+ * buildPath - build path of the executable
+ * @dir: a pointer to the directory of the file
+ * @cmd: the command
+ * @n: length of the command
+ *
+ * description: this function builds a path of an executable file
+ *
+ * Return: a pointer to the path of the executable file
+ */
+char *buildPath(char *dir, char *cmd, int n)
+{
+	char *mem;
+	int len;
+
+	len = strLen(dir);
+	mem = malloc(len + n + 2);
+	if (mem == NULL)
+	{
+		perror("build_path");
+		exit(EXIT_FAILURE);
+	}
+
+	strCpy(mem, dir);
+	strCat(mem, "/");
+	strCat(mem, cmd);
+	strCat(mem, "\0");
+
+	return (mem);
+}
+
+/**
+ * getEnv - get environment variables
+ * @cmd: a pointer to the environment variables
+ *
+ * Return: the value part of the variable
+ */
+char *getEnv(const char *cmd)
+{
+	int i, len = 0;
+	extern char **environ;
+
+	len = strLen(cmd);
+
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		if (strncmp(environ[i], cmd, len) == 0 &&
+		    environ[i][len] == '=')
+			return (&environ[i][len + 1]);
+	}
+
+	/* variable not found */
+	return (NULL);
 }

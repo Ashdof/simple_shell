@@ -8,24 +8,40 @@
 int main(void)
 {
 	char *buffer, **args;
-	ssize_t len;
 	int status;
 
 	buffer = NULL;
 
-	for (;;)
+	do	
 	{
 		printf("($) ");
-		len = getLine(&buffer);
+		getLine(&buffer);
 		args = parseString(buffer);
 		status = launchProcess(args);
-		printf("\nCommands: %s\n", buffer);
-		printf("Length: %ld\n", len);
-		printf("Status: %d\n\n", status);
 
 		free(buffer);
 		free(args);
-	}
+	} while (status);
 
 	return (0);
+}
+
+/**
+ * launchProcess - launch a child process
+ * @args: a reference pointer to a space in memory where tokenized
+ * commands are stored
+ *
+ * description: this function launches a child process
+ *
+ * Return: 1 as status of execution
+ */
+int launchProcess(char **args)
+{
+        if (args[0] == NULL)
+	{
+		free(args);
+                return (1);
+	}
+
+        return (initChild(args));
 }
