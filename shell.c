@@ -5,22 +5,25 @@
  *
  * Return: Always 0 (success)
  */
-int main(void)
+int main(__attribute__((unused)) int ac, char **av)
 {
-	char *buffer, **args;
-	int status;
+	int fd;
 
-	buffer = NULL;
+	if (isatty(STDIN_FILENO))
+		interMode();
+	else if (av[1])
+	{
+		fd = open(av[1], O_RDONLY);
+		if (fd == -1)
+		{
+			perror("open_file");
+			return (1);
+		}
 
-	do {
-		printf("($) ");
-		getLine(&buffer);
-		args = parseString(buffer);
-		status = launchProcess(args);
-
-		free(buffer);
-		free(args);
-	} while (status);
+		nonInterMode(fd);
+	}
+	else
+		nonInterMode(STDIN_FILENO);
 
 	return (0);
 }

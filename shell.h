@@ -8,23 +8,28 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 
 #define TOK_DELIM " \r\t\n\a"
 #define TOK_BUFFSIZE 60
 #define PATH_DELIM ":"
+#define READ_BUFFSIZE 120
 
 extern char **environ;
 
 /* function prototypes */
-ssize_t getLine(char **);
+ssize_t getLine(char **, size_t *, int);
 int initChild(char **);
 char **parseString(char *);
 int launchProcess(char **);
-char *buildPath(char *, char *, int);
+void buildPath(char **, char *, char *, int);
 char *handlePath(char *);
 int handleEnv(char **);
 int handleExit(char **);
 char *getEnv(const char *);
+void readLine(char **);
+void interMode(void);
+void nonInterMode(int);
 
 int strnCmp(char *, char *, int);
 int strCmp(char *, char *);
@@ -34,5 +39,7 @@ void *strCpy(char *, char *);
 char *strCat(char *, char *);
 int scriptChar(char);
 int scriptString(char *);
+void *memChr(char *, int, size_t);
+char *strnCpy(char *, char *, size_t);
 
 #endif /* SIMPLE_SHELL */

@@ -49,3 +49,44 @@ int scriptString(char *str)
 
 	return (i);
 }
+
+/**
+ * strnCpy - copy memory area
+ * @dest: a pointer to a space in memory to store copied bytes
+ * @src: a pointer to a space in memory to copy bytes from
+ * @n: number of bytes to copy
+ *
+ * Return: a pointer to the copied bytes
+ */
+char *strnCpy(char *dest, char *src, size_t n)
+{
+	size_t i;
+
+	for (i = 0; i < n; i++)
+		dest[i] = src[i];
+
+	return (dest);
+}
+
+/**
+ * memChr - get the first occurence of a character
+ * @s: a pointer to the string
+ * @c: the character to search for
+ * @n: the length of the string
+ *
+ * Return: the array of characters up to, but not including the
+ * character represented by c
+ */
+void *memChr(char *s, int c, size_t n)
+{
+	while (n != 0)
+	{
+		if ((unsigned char) c == *s)
+			return ((void *) (s - 1));
+
+		n--;
+		s++;
+	}
+
+	return (NULL);
+}

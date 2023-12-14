@@ -66,10 +66,7 @@ char **parseString(char *str)
 
 	tokens = malloc(sizeof(char *) * buffsize + 1);
 	if (tokens == NULL)
-	{
-		perror("allocation");
-		exit(EXIT_FAILURE);
-	}
+		return (NULL);
 
 	token = strtok(str, TOK_DELIM);
 	while (token)
@@ -82,10 +79,7 @@ char **parseString(char *str)
 			buffsize += TOK_BUFFSIZE;
 			tokens = realloc(tokens, buffsize);
 			if (tokens == NULL)
-			{
-				perror("allocation");
-				exit(EXIT_FAILURE);
-			}
+				return (NULL);
 		}
 		token = strtok(NULL, TOK_DELIM);
 	}
@@ -112,10 +106,7 @@ char *handlePath(char *cmd)
 
 	path = getEnv("PATH");
 	if (path == NULL)
-	{
-		printf("Path is null!\n");
 		return (NULL);
-	}
 
 	path_dup = strDup(path);
 	len = strLen(cmd);
@@ -123,7 +114,7 @@ char *handlePath(char *cmd)
 
 	while (dir != NULL)
 	{
-		full_path = buildPath(dir, cmd, len);
+		buildPath(&full_path, dir, cmd, len);
 
 		if (stat(full_path, &buffer) == 0)
 		{
@@ -150,18 +141,19 @@ char *handlePath(char *cmd)
  * @dir: a pointer to the directory of the file
  * @cmd: the command
  * @n: length of the command
+ * @loc: location to store full path
  *
  * description: this function builds a path of an executable file
  *
- * Return: a pointer to the path of the executable file
+ * Return: nothing
  */
-char *buildPath(char *dir, char *cmd, int n)
+void buildPath(char **loc, char *dir, char *cmd, int n)
 {
 	char *mem;
 	int len;
 
 	len = strLen(dir);
-	mem = malloc(len + n + 2);
+	mem = malloc(sizeof(char) * len + n + 2);
 	if (mem == NULL)
 	{
 		perror("build_path");
@@ -171,9 +163,8 @@ char *buildPath(char *dir, char *cmd, int n)
 	strCpy(mem, dir);
 	strCat(mem, "/");
 	strCat(mem, cmd);
-	strCat(mem, "\0");
 
-	return (mem);
+	*loc = mem;
 }
 
 /**
