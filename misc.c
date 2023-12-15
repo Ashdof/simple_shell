@@ -108,11 +108,11 @@ int strnCmp(char *s1, char *s2, int n)
  */
 void *strCpy(char *dest, char *src)
 {
-	int i;
+	char *q, *p = dest;
 
-	for (i = 0; src[i] != '\0'; i++)
-		dest[i] = src[i];
-	dest[i] = '\0';
+	for (q = src; *q != '\0'; q++)
+		*p++ = *q;
+	*p = '\0';
 
 	return (dest);
 }

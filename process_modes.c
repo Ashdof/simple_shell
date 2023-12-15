@@ -62,8 +62,18 @@ void nonInterMode(int fd)
 			break;
 
 		free(buffer);
-		free(args);
 	}
 
 	close(fd);
+}
+
+/**
+ * handleRelPath - handle relative path
+ */
+char **handleRelPath(char *full_path, char *buffer, char **rs)
+{
+	rs[0] = full_path;
+	rs[1] = buffer;
+
+	return (rs);
 }

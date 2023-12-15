@@ -68,7 +68,7 @@ char **parseString(char *str)
 	if (tokens == NULL)
 		return (NULL);
 
-	token = strtok(str, TOK_DELIM);
+	token = strTok(str, TOK_DELIM);
 	while (token)
 	{
 		tokens[i] = token;
@@ -81,7 +81,7 @@ char **parseString(char *str)
 			if (tokens == NULL)
 				return (NULL);
 		}
-		token = strtok(NULL, TOK_DELIM);
+		token = strTok(NULL, TOK_DELIM);
 	}
 	tokens[i] = NULL;
 

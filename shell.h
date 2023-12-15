@@ -30,6 +30,8 @@ char *getEnv(const char *);
 void readLine(char **);
 void interMode(void);
 void nonInterMode(int);
+char **handleRelPath(char *, char *, char **);
+char *strTok(char *, const char *);
 
 int strnCmp(char *, char *, int);
 int strCmp(char *, char *);
