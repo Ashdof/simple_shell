@@ -43,5 +43,6 @@ int scriptChar(char);
 int scriptString(char *);
 void *memChr(char *, int, size_t);
 char *strnCpy(char *, char *, size_t);
+int _atoi(char *);
 
 #endif /* SIMPLE_SHELL */

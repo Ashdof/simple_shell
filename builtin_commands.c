@@ -6,8 +6,17 @@
  *
  * Return: 0 on success
  */
-int handleExit(__attribute__((unused)) char **argv)
+int handleExit(char **argv)
 {
+	int status;
+
+	if (argv[1] != NULL)
+	{
+		status = _atoi(argv[1]);
+		free(argv);
+		_exit(status);
+	}
+
 	return (0);
 }
 

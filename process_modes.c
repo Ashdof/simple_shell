@@ -21,6 +21,7 @@ void interMode(void)
 		args = parseString(buffer);
 		if (args == NULL)
 		{
+			free(args);
 			free(buffer);
 			continue;
 		}
