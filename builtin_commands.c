@@ -48,7 +48,7 @@ int handleEnv(__attribute__((unused)) char **argv)
  *
  * Return: 0 on success, -1 if it fails
  */
-int setEnv(const char *name, const char *value, int overwrite)
+int setEnv(char *name, char *value, int overwrite)
 {
 	size_t n_len, v_len;
 	char *mem, *new_env;
@@ -70,7 +70,7 @@ int setEnv(const char *name, const char *value, int overwrite)
 	mem[n_len + v_len + 1] = '\0';
 
 	if (putenv(mem) != 0)
-		return (-i);
+		return (-1);
 
 	return (0);
 }
@@ -82,7 +82,7 @@ int setEnv(const char *name, const char *value, int overwrite)
  *
  * Return: 0 on success, -1 on failure
  */
-int unsetEnv(const char *name)
+int unsetEnv(char *name)
 {
 	char **env, **p;
 	size_t len;

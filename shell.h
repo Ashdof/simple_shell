@@ -31,9 +31,9 @@ void readLine(char **);
 void interMode(void);
 void nonInterMode(int);
 char *strTok(char *, const char *);
-int setEnv(const char *, const char *, int);
+int setEnv(char *, char *, int);
 char **handleRelPath(char *, char *, char **);
-int unsetEnv(const char *);
+int unsetEnv(char *);
 
 int strnCmp(char *, char *, int);
 int strCmp(char *, char *);
