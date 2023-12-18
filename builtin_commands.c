@@ -40,6 +40,38 @@ int handleEnv(__attribute__((unused)) char **argv)
 }
 
 /**
+ * handleCD - implement the cd built-in command
+ * @argv: a reference pointer to a space in memory where the
+ * command is stored
+ *
+ * Return: 1 on success
+ */
+int handleCD(char **argv)
+{
+	size_t path_size = PATH_MAX;
+	char *path, *cur_path, buffer[PATH_MAX];
+
+	if (argv == NULL)
+		return (1);
+	if (argv[1] == NULL)
+		path = getHomePath();
+	else if (strcmp(argv[1], "-") == 0)
+		path = getPrevPath();
+	else
+		path = argv[1];
+
+	if (chdir(path) == 0)
+	{
+		cur_path = getcwd(buffer, path_size);
+		scriptString(buffer);
+		if (setEnv("PWD", cur_path, 1) != 0)
+			perror("cd:update_path");
+	}
+
+	return (1);
+}
+
+/**
  * setEnv - set environment variable
  * @name: a pointer to a space in memory where the variable is stored
  * @value: a pointer to a space in memory where the variable's value
@@ -70,8 +102,12 @@ int setEnv(char *name, char *value, int overwrite)
 	mem[n_len + v_len + 1] = '\0';
 
 	if (putenv(mem) != 0)
+	{
+		free(mem);
 		return (-1);
+	}
 
+	/*free(mem);*/
 	return (0);
 }
 

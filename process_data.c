@@ -175,7 +175,8 @@ void buildPath(char **loc, char *dir, char *cmd, int n)
  */
 char *getEnv(const char *cmd)
 {
-	int i, len = 0;
+	int i;
+	size_t len;
 
 	len = strLen(cmd);
 

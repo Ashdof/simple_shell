@@ -9,6 +9,8 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <limits.h>
+#include <errno.h>
 
 #define TOK_DELIM " \r\t\n\a"
 #define TOK_BUFFSIZE 60
@@ -26,6 +28,7 @@ void buildPath(char **, char *, char *, int);
 char *handlePath(char *);
 int handleEnv(char **);
 int handleExit(char **);
+int handleCD(char **);
 char *getEnv(const char *);
 void readLine(char **);
 void interMode(void);
@@ -46,5 +49,8 @@ int scriptString(char *);
 void *memChr(char *, int, size_t);
 char *strnCpy(char *, char *, size_t);
 int _atoi(char *);
+char *getHomePath(void);
+char *getPrevPath(void);
+int changeDir(char *);
 
 #endif /* SIMPLE_SHELL */

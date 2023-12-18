@@ -40,10 +40,11 @@ int main(__attribute__((unused)) int ac, char **av)
 int launchProcess(char **args)
 {
 	int i, num;
-	char *built_ins[] = {"exit", "env"};
+	char *built_ins[] = {"exit", "env", "cd"};
 	int (*builtins_cmd[]) (char **) = {
 		&handleExit,
-		&handleEnv
+		&handleEnv,
+		&handleCD
 	};
 
 	if (args[0] == NULL)
