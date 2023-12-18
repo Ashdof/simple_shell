@@ -63,6 +63,7 @@ void nonInterMode(int fd)
 			break;
 
 		free(buffer);
+		free(args);
 	}
 
 	close(fd);
