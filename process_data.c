@@ -60,7 +60,7 @@ int initChild(char **argv)
 char **parseString(char *str)
 {
 	int buffsize, i = 0;
-	char **tokens, *token;
+	char **tokens, *cur_token, *next_token;
 
 	buffsize = TOK_BUFFSIZE;
 
@@ -68,11 +68,32 @@ char **parseString(char *str)
 	if (tokens == NULL)
 		return (NULL);
 
-	token = strTok(str, TOK_DELIM);
-	while (token)
+	cur_token = strTok(str, TOK_DELIM);
+	while (cur_token)
 	{
-		tokens[i++] = token;
-		token = strTok(NULL, TOK_DELIM);
+		if (strCmp(cur_token, "&&") == 0)
+		{
+			next_token = strTok(NULL, TOK_DELIM);
+			if (next_token != NULL)
+				tokens[i++] = next_token;
+		}
+		else if (strCmp(cur_token, "||") == 0)
+		{
+			next_token = strTok(NULL, TOK_DELIM);
+			if (next_token != NULL)
+				tokens[i++] = next_token;
+		}
+		else
+			tokens[i++] = cur_token;
+
+		if (i >= buffsize)
+		{
+			buffsize += TOK_BUFFSIZE;
+			tokens = realloc(tokens, buffsize);
+			if (tokens == NULL)
+				return (NULL);
+		}
+		cur_token = strTok(NULL, TOK_DELIM);
 	}
 	tokens[i] = NULL;
 
