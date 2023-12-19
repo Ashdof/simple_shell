@@ -26,6 +26,7 @@ char *getPrevPath(void)
 	char *prev_path;
 
 	prev_path = getEnv("OLDPWD");
+	scriptString(prev_path);
 	if (prev_path == NULL)
 		perror("cd:prev_path");
 	else

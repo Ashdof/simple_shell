@@ -12,7 +12,7 @@
 #include <limits.h>
 #include <errno.h>
 
-#define TOK_DELIM " \r\t\n\a"
+#define TOK_DELIM " ;\r\t\n\a"
 #define TOK_BUFFSIZE 60
 #define PATH_DELIM ":"
 #define READ_BUFFSIZE 120

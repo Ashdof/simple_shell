@@ -71,16 +71,7 @@ char **parseString(char *str)
 	token = strTok(str, TOK_DELIM);
 	while (token)
 	{
-		tokens[i] = token;
-		i++;
-
-		if (i >= buffsize)
-		{
-			buffsize += TOK_BUFFSIZE;
-			tokens = realloc(tokens, buffsize);
-			if (tokens == NULL)
-				return (NULL);
-		}
+		tokens[i++] = token;
 		token = strTok(NULL, TOK_DELIM);
 	}
 	tokens[i] = NULL;

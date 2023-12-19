@@ -66,6 +66,8 @@ int handleCD(char **argv)
 		scriptString(buffer);
 		if (setEnv("PWD", cur_path, 1) != 0)
 			perror("cd:update_path");
+		if (setEnv("OLDPWD", getEnv("PWD"), 1) != 0)
+			perror("cd:update_old_path");
 	}
 
 	return (1);
@@ -93,7 +95,7 @@ int setEnv(char *name, char *value, int overwrite)
 
 	n_len = strLen(name);
 	v_len = strLen(value);
-	mem = malloc(n_len + v_len + 2);
+	mem = malloc(sizeof(char) * (n_len + v_len + 2));
 	if (mem == NULL)
 		return (-1);
 	strnCpy(mem, name, n_len);
