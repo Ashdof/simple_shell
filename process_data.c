@@ -63,6 +63,8 @@ char **parseString(char *str)
 	char **tokens, *cur_token, *next_token;
 
 	buffsize = TOK_BUFFSIZE;
+	tokens = NULL;
+	cur_token = next_token = NULL;
 
 	tokens = malloc(sizeof(char *) * buffsize + 1);
 	if (tokens == NULL)

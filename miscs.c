@@ -51,19 +51,23 @@ int scriptString(char *str)
 }
 
 /**
- * strnCpy - copy memory area
+ * strnCpy - copy bytes
  * @dest: a pointer to a space in memory to store copied bytes
  * @src: a pointer to a space in memory to copy bytes from
  * @n: number of bytes to copy
+ *
+ * description: this function copies n bytes from the space pointed
+ * at by src to the space pointed at by dest
  *
  * Return: a pointer to the copied bytes
  */
 char *strnCpy(char *dest, char *src, size_t n)
 {
 	size_t i;
+	char *p = dest;
 
-	for (i = 0; i < n; i++)
-		dest[i] = src[i];
+	for (i = 0; i <= n; i++)
+		*p++ = src[i];
 
 	return (dest);
 }

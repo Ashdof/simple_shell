@@ -14,8 +14,8 @@
 ssize_t getLine(char **data, size_t *n, int fd)
 {
 	ssize_t len = 0;
-	static size_t min = READ_BUFFSIZE;
-	char *mem = NULL;
+	size_t min = READ_BUFFSIZE;
+	char *mem;
 
 	if (*n == 0)
 		*n = min;
@@ -23,7 +23,6 @@ ssize_t getLine(char **data, size_t *n, int fd)
 	mem = malloc(sizeof(char) * (*n) + 1);
 	if (mem == NULL)
 		return (-1);
-
 
 	while ((len = read(fd, mem, *n)) != -1)
 	{
@@ -48,6 +47,8 @@ ssize_t getLine(char **data, size_t *n, int fd)
 		return (-1);
 	mem[len] = '\0';
 	*data = mem;
+	/*free(mem);*/
+	/**data = msg;*/
 
 	return (len);
 }

@@ -15,7 +15,7 @@
 #define TOK_DELIM " \r\t\n\a;"
 #define TOK_BUFFSIZE 60
 #define PATH_DELIM ":"
-#define READ_BUFFSIZE 120
+#define READ_BUFFSIZE 1024
 
 extern char **environ;
 

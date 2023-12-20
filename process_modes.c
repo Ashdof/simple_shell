@@ -10,8 +10,8 @@
  */
 void interMode(void)
 {
-	char **args, *buffer = NULL;
-	int status;
+	char **args = NULL, *buffer = NULL;
+	int status = 0;
 
 	do {
 		scriptString("($) ");
