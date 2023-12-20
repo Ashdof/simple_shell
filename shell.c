@@ -2,6 +2,8 @@
 
 /**
  * main - application entry point
+ * @ac: argument count
+ * @av: a reference pointer to the input command
  *
  * Return: Always 0 (success)
  */
@@ -41,6 +43,7 @@ int launchProcess(char **args)
 {
 	int i, num;
 	char *built_ins[] = {"exit", "env", "cd"};
+
 	int (*builtins_cmd[]) (char **) = {
 		&handleExit,
 		&handleEnv,

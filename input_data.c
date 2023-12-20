@@ -3,7 +3,7 @@
 /**
  * getLine - read input stream
  * @data: a pointer to a space in memory to store input read
- * @: a pointer to a space in memory holding the number of bytes
+ * @n: a pointer to a space in memory holding the number of bytes
  * to read
  * @fd: a file descriptor
  *

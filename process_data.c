@@ -69,7 +69,6 @@ char **parseString(char *str)
 	tokens = malloc(sizeof(char *) * buffsize + 1);
 	if (tokens == NULL)
 		return (NULL);
-
 	cur_token = strTok(str, TOK_DELIM);
 	while (cur_token)
 	{
@@ -87,7 +86,6 @@ char **parseString(char *str)
 		}
 		else
 			tokens[i++] = cur_token;
-
 		if (i >= buffsize)
 		{
 			buffsize += TOK_BUFFSIZE;
@@ -98,7 +96,6 @@ char **parseString(char *str)
 		cur_token = strTok(NULL, TOK_DELIM);
 	}
 	tokens[i] = NULL;
-
 	return (tokens);
 }
 
@@ -121,10 +118,12 @@ char *handlePath(char *cmd)
 	path = getEnv("PATH");
 	if (path == NULL)
 		return (NULL);
+	if (cmd == NULL)
+		return (NULL);
 
 	path_dup = strDup(path);
 	len = strLen(cmd);
-	dir = strtok(path_dup, PATH_DELIM);
+	dir = strTok(path_dup, PATH_DELIM);
 
 	while (dir != NULL)
 	{
@@ -138,7 +137,7 @@ char *handlePath(char *cmd)
 		else
 		{
 			free(full_path);
-			dir = strtok(NULL, PATH_DELIM);
+			dir = strTok(NULL, PATH_DELIM);
 		}
 	}
 

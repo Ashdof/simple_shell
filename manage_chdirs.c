@@ -5,7 +5,7 @@
  *
  * Return: path to home directory
  */
-char *getHomePath(void)	
+char *getHomePath(void)
 {
 	char *home;
 
