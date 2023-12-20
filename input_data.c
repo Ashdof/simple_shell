@@ -26,12 +26,6 @@ ssize_t getLine(char **data, size_t *n, int fd)
 
 	while ((len = read(fd, mem, *n)) != -1)
 	{
-		/*strnCpy(*data, mem, len);*/
-
-		/* search for a newline character */
-		if (memChr(mem, '\n', len))
-			break;
-
 		if (len >= ((ssize_t) *n))
 		{
 			*n += min;
@@ -42,6 +36,12 @@ ssize_t getLine(char **data, size_t *n, int fd)
 				return (-1);
 			}
 		}
+		/*strnCpy(*data, mem, len);*/
+
+		/* search for a newline character */
+		if (memChr(mem, '\n', len))
+			break;
+
 	}
 	if (len == -1)
 		return (-1);
